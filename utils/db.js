@@ -1,17 +1,15 @@
 import { MongoClient } from 'mongodb';
-// eslint-disable-next-line import/no-unresolved, import/extensions
-import envLoader from './env_loader';
 
 let { DB_DATABASE } = process.env;
 if (!DB_DATABASE) DB_DATABASE = 'files_manager';
 
 class DBClient {
   constructor() {
-    envLoader();
-    const host = process.env.DB_HOST || 'localhost';
-    const port = process.env.DB_PORT || 27017;
-    const database = process.env.DB_DATABASE || 'files_manager';
-    const url = `mongodb://${host}:${port}/${database}`;
+    let host = process.env.DB_HOST;
+    if (!host) host = 'localhost';
+    let port = process.env.DB_PORT;
+    if (!port) port = '27017';
+    const url = `mongodb://${host}:${port}/${DB_DATABASE}`;
     this.client = new MongoClient(url, { useUnifiedTopology: true });
     this.client.connect();
   }
