@@ -11,13 +11,7 @@ class DBClient {
     if (!port) port = '27017';
     const url = `mongodb://${host}:${port}/${DB_DATABASE}`;
     this.client = new MongoClient(url, { useUnifiedTopology: true });
-    try {
-      this.client.connect();
-      this.db = this.client.db(DB_DATABASE);
-      this.isReady = true;
-    } catch (error) {
-      this.isReady = false;
-    }
+    this.client.connect();
   }
 
   isAlive() {
@@ -25,13 +19,11 @@ class DBClient {
   }
 
   async nbUsers() {
-    const c = await this.db.collection('users').countDocuments();
-    return c;
+    return this.client.db().collection('users').countDocuments();
   }
 
   async nbFiles() {
-    const c = await this.db.collection('files').countDocuments();
-    return c;
+    return this.client.db().collection('files').countDocuments();
   }
 }
 
