@@ -7,7 +7,7 @@ const port = process.env.POST || 5000;
 routers(app);
 
 app.listen(port, () => {
-  console.log(`app listening on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
 
 module.exports = app;
