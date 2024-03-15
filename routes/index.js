@@ -1,13 +1,9 @@
 const express = require('express');
+import AppController from '../controllers/AppController';
 
-const routers = express.Router();
-
-routers.get('/status', (req, res) => {
-  res.send('User home page');
-});
-
-routers.get('/stats', (req, res) => {
-  res.send('User profile page');
-});
+const routers = (api) => {
+  api.get('status', AppController.getStatus);
+  api.get('stats', AppController.getStats);
+}
 
 module.exports = routers;
